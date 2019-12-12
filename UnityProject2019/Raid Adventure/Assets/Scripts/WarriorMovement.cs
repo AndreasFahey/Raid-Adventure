@@ -11,11 +11,14 @@ public enum PlayerState{
 
 public class WarriorMovement : MonoBehaviour
 {
+    // State Machine for Warrior Above using enum ^^
+    // Main Class for Warrior/Player 
     public PlayerState currentState;
     public float speed;
     private Rigidbody2D myRigidbody;
     private Vector3 change;
     // Start is called before the first frame update
+    // Starts Animations Made
     private Animator animator;
     void Start()
     {
@@ -27,6 +30,7 @@ public class WarriorMovement : MonoBehaviour
     }
 
     // Update is called once per frame
+    // Warrior Functions
     void Update()
     {
         change = Vector3.zero;
@@ -45,6 +49,7 @@ public class WarriorMovement : MonoBehaviour
 
     }
 
+    // IEnumerator for Attack
     private IEnumerator AttackCo()
     {
         animator.SetBool("attacking", true);
@@ -55,6 +60,7 @@ public class WarriorMovement : MonoBehaviour
         currentState = PlayerState.walk;
     }
 
+    // Update Annimation and Move
     void UpdateAnimationAndMove()
     {
         if ( change != Vector3.zero )
@@ -68,6 +74,7 @@ public class WarriorMovement : MonoBehaviour
         }
 
     }
+    // Move Warrior/Player Around
     void MoveCharacter()
     {
         myRigidbody.MovePosition(
@@ -75,11 +82,13 @@ public class WarriorMovement : MonoBehaviour
         );
     }
 
+    // Knock
     public void Knock(Rigidbody2D myRigidbody, float knockTime)
     {
         StartCoroutine(KnockCo(myRigidbody, knockTime));
     }
 
+    // IEnumerator for KnockCo
     private IEnumerator KnockCo(Rigidbody2D myRigidbody, float knockTime)
     {
         if (myRigidbody != null)

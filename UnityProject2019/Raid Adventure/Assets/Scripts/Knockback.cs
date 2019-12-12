@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class Knockback : MonoBehaviour
 {
+    // Variables. Knockback only works when player walks into enemy or enemy walks into warrior
+    // Used this class to do warrior attack
     public float thrust;
     public float knockTime;
     public float damage;
 
     // Start is called before the first frame update
-
     private void OnTriggerEnter2D(Collider2D other)
     {
         //if(other.gameObject.CompareTag("attack"))
@@ -41,7 +42,7 @@ public class Knockback : MonoBehaviour
             }
         }
     }
-
+    // Commented out code i dont want to use but didnt want to get rid off it
     /*private IEnumerator KnockCo(Rigidbody2D enemy)
     {
         if (enemy != null)

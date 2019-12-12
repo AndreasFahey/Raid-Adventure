@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
+    // Variables for Camera Movement to Follow The Player
     public Transform target;
     public float smoothing;
     public Vector2 maxPosition;
