@@ -4,7 +4,9 @@ using UnityEngine;
 
 public enum PlayerState{
     walk,
-    attack
+    attack,
+    idle,
+    stagger
 }
 
 public class WarriorMovement : MonoBehaviour
@@ -30,12 +32,13 @@ public class WarriorMovement : MonoBehaviour
         change = Vector3.zero;
         change.x = Input.GetAxisRaw("Horizontal");
         change.y = Input.GetAxisRaw("Vertical");
-        if(Input.GetButtonDown("attack") && currentState != PlayerState.attack)
+        if(Input.GetButtonDown("attack") && currentState != PlayerState.attack
+           && currentState != PlayerState.stagger)
         {
             StartCoroutine(AttackCo());
         }
         // Debug.Log(change);
-        else if(currentState == PlayerState.walk)
+        else if(currentState == PlayerState.walk || currentState == PlayerState.idle)
         {
             UpdateAnimationAndMove();
         }
@@ -70,5 +73,21 @@ public class WarriorMovement : MonoBehaviour
         myRigidbody.MovePosition(
             transform.position + change * speed * Time.deltaTime
         );
+    }
+
+    public void Knock(Rigidbody2D myRigidbody, float knockTime)
+    {
+        StartCoroutine(KnockCo(myRigidbody, knockTime));
+    }
+
+    private IEnumerator KnockCo(Rigidbody2D myRigidbody, float knockTime)
+    {
+        if (myRigidbody != null)
+        {
+            yield return new WaitForSeconds(knockTime);
+            myRigidbody.velocity = Vector2.zero;
+            currentState = PlayerState.idle;
+            myRigidbody.velocity = Vector2.zero;
+        }
     }
 }
